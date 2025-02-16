@@ -1,0 +1,77 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title="v0.dev/Bolt.new | 王起哲的个人网站">
+  <main class="min-h-screen bg-[#1E1E3F] py-20 px-8">
+    <div class="max-w-[108rem] mx-auto">
+      <div class="flex justify-center mb-16">
+        <div class="text-center">
+          <div class="bg-[#CB3837] w-24 h-24 rounded-xl mb-6 mx-auto flex items-center justify-center">
+            <i class="fas fa-magic text-[4rem] text-white"></i>
+          </div>
+          <h1 class="text-[4rem] font-bold text-[#B362FF] mb-4">v0.dev / Bolt.new</h1>
+          <p class="text-[2rem] text-gray-300">AI驱动的UI设计工具，通过自然语言快速生成精美的用户界面。</p>
+        </div>
+      </div>
+
+      <div class="glass-morphism p-12 rounded-[20px] mb-12">
+        <h2 class="text-[2.4rem] font-semibold mb-8 text-[#B362FF]">主要特性</h2>
+        <div class="grid grid-cols-2 gap-6">
+          <div class="flex items-center gap-4">
+            <i class="fas fa-check text-[#50FA7B]"></i>
+            <span class="text-[1.8rem] text-gray-200">界面生成</span>
+          </div>
+          <div class="flex items-center gap-4">
+            <i class="fas fa-check text-[#50FA7B]"></i>
+            <span class="text-[1.8rem] text-gray-200">组件导出</span>
+          </div>
+          <div class="flex items-center gap-4">
+            <i class="fas fa-check text-[#50FA7B]"></i>
+            <span class="text-[1.8rem] text-gray-200">响应式设计</span>
+          </div>
+          <div class="flex items-center gap-4">
+            <i class="fas fa-check text-[#50FA7B]"></i>
+            <span class="text-[1.8rem] text-gray-200">代码优化</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass-morphism p-12 rounded-[20px] mb-12">
+        <h2 class="text-[2.4rem] font-semibold mb-8 text-[#B362FF]">学习资源</h2>
+        <div class="space-y-4">
+          <a href="https://v0.dev/" target="_blank" 
+             class="flex items-center gap-4 text-[1.8rem] text-gray-200 hover:text-[#50FA7B] transition-colors">
+            <i class="fas fa-external-link-alt"></i>
+            <span>v0.dev 官网</span>
+          </a>
+          <a href="https://bolt.new/" target="_blank"
+             class="flex items-center gap-4 text-[1.8rem] text-gray-200 hover:text-[#50FA7B] transition-colors">
+            <i class="fas fa-external-link-alt"></i>
+            <span>Bolt.new 官网</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <a href="/#skills" 
+           class="inline-flex items-center gap-3 px-6 py-3 text-[1.8rem] text-[#B362FF] hover:text-[#50FA7B] 
+                  bg-[rgba(147,98,255,0.1)] hover:bg-[rgba(80,250,123,0.1)] rounded-xl
+                  border border-[#B362FF] hover:border-[#50FA7B] transition-all duration-300">
+          <i class="fas fa-arrow-left text-[1.6rem]"></i>
+          <span>返回技术栈</span>
+        </a>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .glass-morphism {
+    background: rgba(30, 30, 63, 0.7);
+    border: 1px solid rgba(147, 51, 234, 0.1);
+    box-shadow: 
+      0 4px 24px rgba(0, 0, 0, 0.3),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+  }
+</style> 

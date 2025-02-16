@@ -1,0 +1,54 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const projects = [
+  {
+    title: '电商平台',
+    description: '基于React和Node.js开发的全栈电商平台',
+    image: 'https://example.com/ecommerce.jpg',
+    tags: ['React', 'Node.js', 'MongoDB'],
+    link: '#'
+  },
+  // 添加更多项目...
+];
+---
+
+<Layout title="作品集 | 完整展示">
+  <div class="min-h-screen py-20 px-8">
+    <div class="max-w-[108rem] mx-auto">
+      <h1 class="color__gradiente text-[5rem] mb-16 text-center">作品集</h1>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {projects.map(project => (
+          <div class="glass-morphism p-6 hover-card">
+            <img 
+              src={project.image}
+              alt={project.title}
+              class="w-full aspect-video object-cover rounded-lg mb-4"
+            />
+            <h3 class="color__gradiente text-[2.4rem] mb-2">{project.title}</h3>
+            <p class="text-[1.6rem] text-gray-300 mb-4">{project.description}</p>
+            <div class="flex flex-wrap gap-2 mb-4">
+              {project.tags.map(tag => (
+                <span class="px-3 py-1 text-[1.4rem] bg-black/20 rounded-full">
+                  {tag}
+                </span>
+              ))}
+            </div>
+            <a href={project.link} class="more-button">
+              查看详情
+              <i class="fas fa-arrow-right"></i>
+            </a>
+          </div>
+        ))}
+      </div>
+      
+      <div class="text-center mt-16">
+        <a href="/#portfolio" class="more-button">
+          <i class="fas fa-arrow-left"></i>
+          返回首页
+        </a>
+      </div>
+    </div>
+  </div>
+</Layout>

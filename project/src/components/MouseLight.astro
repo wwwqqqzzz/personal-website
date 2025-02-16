@@ -1,0 +1,14 @@
+---
+---
+<div id="mouseLightContainer" class="light-cursor"></div>
+
+<script>
+  const lightCursor = document.getElementById('mouseLightContainer');
+  
+  document.addEventListener('mousemove', (e) => {
+    if (lightCursor) {
+      lightCursor.style.left = e.clientX + 'px';
+      lightCursor.style.top = e.clientY + 'px';
+    }
+  });
+</script>

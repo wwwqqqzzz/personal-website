@@ -1,0 +1,243 @@
+---
+export async function getStaticPaths() {
+  const techs = [
+    {
+      id: 'html',
+      name: 'HTML5',
+      icon: 'fab fa-html5',
+      iconColor: '#E34F26',
+      description: 'HTML5是构建Web内容的基础，提供了更语义化的标签和强大的API。',
+      features: ['语义化标签', 'Web Storage', 'Canvas', 'Web Workers', 'WebSocket'],
+      resources: [
+        { name: 'MDN Web Docs', url: 'https://developer.mozilla.org/zh-CN/docs/Web/HTML' },
+        { name: 'W3Schools', url: 'https://www.w3schools.com/html/' }
+      ]
+    },
+    {
+      id: 'css',
+      name: 'CSS3',
+      icon: 'fab fa-css3-alt',
+      iconColor: '#1572B6',
+      description: 'CSS3是最新的CSS标准，提供了丰富的样式和动画特性。',
+      features: ['Flexbox', 'Grid', 'Animations', 'Media Queries', 'Variables'],
+      resources: [
+        { name: 'MDN Web Docs', url: 'https://developer.mozilla.org/zh-CN/docs/Web/CSS' },
+        { name: 'CSS-Tricks', url: 'https://css-tricks.com/' }
+      ]
+    },
+    {
+      id: 'javascript',
+      name: 'JavaScript',
+      icon: 'fab fa-js',
+      iconColor: '#F7DF1E',
+      description: 'JavaScript是一种灵活的编程语言，可以创建动态交互的Web应用。',
+      features: ['ES6+特性', '异步编程', '模块化', 'DOM操作', '事件处理'],
+      resources: [
+        { name: 'MDN Web Docs', url: 'https://developer.mozilla.org/zh-CN/docs/Web/JavaScript' },
+        { name: 'JavaScript.info', url: 'https://javascript.info/' }
+      ]
+    },
+    {
+      id: 'react',
+      name: 'React',
+      icon: 'fab fa-react',
+      iconColor: '#61DAFB',
+      description: 'React是一个用于构建用户界面的JavaScript库，由Facebook开发。',
+      features: ['组件化开发', '虚拟DOM', 'JSX语法', 'Hooks', '状态管理'],
+      resources: [
+        { name: 'React官方文档', url: 'https://reactjs.org/' },
+        { name: 'React教程', url: 'https://zh-hans.react.dev/' }
+      ]
+    },
+    {
+      id: 'vue',
+      name: 'Vue.js',
+      icon: 'fab fa-vuejs',
+      iconColor: '#4FC08D',
+      description: 'Vue.js是一个渐进式的JavaScript框架，用于构建用户界面。',
+      features: ['响应式数据', '组件系统', '模板语法', '路由管理', '状态管理'],
+      resources: [
+        { name: 'Vue.js官方文档', url: 'https://vuejs.org/' },
+        { name: 'Vue Router', url: 'https://router.vuejs.org/' }
+      ]
+    },
+    {
+      id: 'nodejs',
+      name: 'Node.js',
+      icon: 'fab fa-node-js',
+      iconColor: '#339933',
+      description: 'Node.js是一个基于Chrome V8引擎的JavaScript运行时环境。',
+      features: ['事件驱动', '非阻塞I/O', 'npm包管理', 'Express框架', 'RESTful API'],
+      resources: [
+        { name: 'Node.js官方文档', url: 'https://nodejs.org/' },
+        { name: 'Express.js', url: 'https://expressjs.com/' }
+      ]
+    },
+    {
+      id: 'python',
+      name: 'Python',
+      icon: 'fab fa-python',
+      iconColor: '#3776AB',
+      description: 'Python是一种简单易学且功能强大的编程语言。',
+      features: ['简洁语法', '丰富的库', '数据分析', 'Web开发', '人工智能'],
+      resources: [
+        { name: 'Python官方文档', url: 'https://www.python.org/' },
+        { name: 'Python教程', url: 'https://docs.python.org/zh-cn/3/' }
+      ]
+    },
+    {
+      id: 'postgresql',
+      name: 'PostgreSQL',
+      icon: 'fas fa-database',
+      iconColor: '#336791',
+      description: 'PostgreSQL是一个功能强大的开源关系型数据库系统。',
+      features: ['ACID事务', '复杂查询', '扩展性', '地理信息', 'JSON支持'],
+      resources: [
+        { name: 'PostgreSQL官方文档', url: 'https://www.postgresql.org/' },
+        { name: 'PostgreSQL教程', url: 'https://www.postgresqltutorial.com/' }
+      ]
+    },
+    {
+      id: 'mysql',
+      name: 'MySQL',
+      icon: 'fas fa-server',
+      iconColor: '#4479A1',
+      description: 'MySQL是世界上最受欢迎的开源关系型数据库管理系统。',
+      features: ['高性能', '可靠性', '易用性', '可扩展性', '社区支持'],
+      resources: [
+        { name: 'MySQL官方文档', url: 'https://www.mysql.com/' },
+        { name: 'MySQL教程', url: 'https://www.mysqltutorial.org/' }
+      ]
+    },
+    {
+      id: 'git',
+      name: 'Git',
+      icon: 'fas fa-code-branch',
+      iconColor: '#F05032',
+      description: 'Git是一个分布式版本控制系统，用于跟踪文件的变化。',
+      features: ['分支管理', '版本控制', '协作开发', '代码回溯', '冲突解决'],
+      resources: [
+        { name: 'Git官方文档', url: 'https://git-scm.com/' },
+        { name: 'Git教程', url: 'https://www.atlassian.com/git/tutorials' }
+      ]
+    },
+    {
+      id: 'docker',
+      name: 'Docker',
+      icon: 'fab fa-docker',
+      iconColor: '#2496ED',
+      description: 'Docker是一个开源的应用容器引擎，让开发者可以打包他们的应用。',
+      features: ['容器化', '镜像管理', '服务编排', '环境一致性', '快速部署'],
+      resources: [
+        { name: 'Docker官方文档', url: 'https://www.docker.com/' },
+        { name: 'Docker Hub', url: 'https://hub.docker.com/' }
+      ]
+    },
+    {
+      id: 'aws',
+      name: 'AWS',
+      icon: 'fab fa-aws',
+      iconColor: '#FF9900',
+      description: 'Amazon Web Services提供了一套完整的云计算服务。',
+      features: ['云计算', '存储服务', '数据库', '人工智能', '无服务器架构'],
+      resources: [
+        { name: 'AWS官方文档', url: 'https://aws.amazon.com/' },
+        { name: 'AWS培训', url: 'https://aws.amazon.com/training/' }
+      ]
+    },
+    {
+      id: 'linux',
+      name: 'Linux',
+      icon: 'fab fa-linux',
+      iconColor: '#FCC624',
+      description: 'Linux是一个自由和开放源码的类UNIX操作系统。',
+      features: ['开源系统', '安全性', '稳定性', '多用户', '网络功能'],
+      resources: [
+        { name: 'Linux官方文档', url: 'https://www.linux.org/' },
+        { name: 'Linux教程', url: 'https://www.linux.com/training-tutorials/' }
+      ]
+    },
+    {
+      id: 'vscode',
+      name: 'VS Code',
+      icon: 'fas fa-code',
+      iconColor: '#007ACC',
+      description: 'Visual Studio Code是一个轻量级但功能强大的源代码编辑器。',
+      features: ['智能补全', '调试工具', '集成终端', '扩展系统', 'Git集成'],
+      resources: [
+        { name: 'VS Code官方文档', url: 'https://code.visualstudio.com/' },
+        { name: 'VS Code教程', url: 'https://code.visualstudio.com/docs' }
+      ]
+    },
+    {
+      id: 'terminal',
+      name: '命令行',
+      icon: 'fas fa-terminal',
+      iconColor: '#4D4D4D',
+      description: '命令行界面是与计算机交互的强大工具。',
+      features: ['文件操作', '进程管理', '系统配置', '网络工具', '自动化脚本'],
+      resources: [
+        { name: 'Linux命令大全', url: 'https://www.linuxcool.com/' },
+        { name: 'Shell教程', url: 'https://www.shellscript.sh/' }
+      ]
+    }
+  ];
+  
+  return techs.map(tech => ({
+    params: { tech: tech.id },
+    props: { tech }
+  }));
+}
+
+const { tech } = Astro.props;
+
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title={`${tech.name} | 技术详情`}>
+  <div class="min-h-screen py-20 px-8">
+    <div class="max-w-[108rem] mx-auto">
+      <div class="text-center mb-16">
+        <i class={`${tech.icon} text-[8rem]`} style={`color: ${tech.iconColor}`}></i>
+        <h1 class="color__gradiente text-[5rem] mt-4">{tech.name}</h1>
+      </div>
+      
+      <div class="glass-morphism p-8 mb-16">
+        <p class="text-[2rem] mb-8">{tech.description}</p>
+        
+        <h2 class="color__gradiente text-[3rem] mb-6">主要特性</h2>
+        <ul class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-12">
+          {tech.features.map(feature => (
+            <li class="flex items-center gap-4 text-[1.8rem]">
+              <i class="fas fa-check text-[#58f9ff]"></i>
+              {feature}
+            </li>
+          ))}
+        </ul>
+        
+        <h2 class="color__gradiente text-[3rem] mb-6">学习资源</h2>
+        <ul class="space-y-4">
+          {tech.resources.map(resource => (
+            <li>
+              <a 
+                href={resource.url}
+                target="_blank"
+                class="text-[1.8rem] tech-link"
+              >
+                {resource.name}
+                <i class="fas fa-external-link-alt ml-2"></i>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+      
+      <div class="text-center">
+        <a href="/#skills" class="more-button">
+          <i class="fas fa-arrow-left"></i>
+          返回技术栈
+        </a>
+      </div>
+    </div>
+  </div>
+</Layout>

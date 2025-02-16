@@ -1,0 +1,110 @@
+---
+import { Image } from 'astro:assets';
+---
+
+<section class="min-h-screen flex items-center justify-center px-8 py-32 section-animate">
+  <div class="max-w-[108rem] w-full">
+    <div class="text-center space-y-8">
+      <h1 class="text-[6rem] font-bold bg-gradient-to-r from-purple-400 to-pink-600 text-transparent bg-clip-text">
+        王起哲
+      </h1>
+      
+      <div class="typewriter-container text-[2.8rem] text-gray-200 h-[120px] flex flex-col items-center justify-center">
+        <div class="typewriter-text">热衷于解决复杂技术挑战</div>
+      </div>
+
+      <p class="text-[2rem] text-gray-300 max-w-[80rem] mx-auto leading-relaxed">
+        5年全栈开发经验 | 主导10+大型项目 | 技术团队管理经验
+      </p>
+      
+      <div class="flex gap-6 justify-center mt-12">
+        <a href="#portfolio" class="btn-primary">
+          查看作品集
+          <i class="fas fa-arrow-right ml-2"></i>
+        </a>
+        <a href="/resume.pdf" class="btn-secondary" target="_blank">
+          下载简历
+          <i class="fas fa-download ml-2"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .btn-primary {
+    @apply px-8 py-4 text-[1.8rem] bg-gradient-to-r from-purple-500 to-pink-600 rounded-full 
+           text-white font-medium transition-transform hover:scale-105 flex items-center;
+  }
+  
+  .btn-secondary {
+    @apply px-8 py-4 text-[1.8rem] border-2 border-purple-500 rounded-full text-purple-400 
+           font-medium transition-transform hover:scale-105 flex items-center;
+  }
+
+  .typewriter-container {
+    @apply relative;
+  }
+
+  .typewriter-text::after {
+    content: '|';
+    animation: blink 1s infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+</style>
+
+<script>
+const messages = [
+  "热衷于解决复杂技术挑战",
+  "注重代码质量与工程效率",
+  "擅长团队协作与技术管理",
+  "持续学习与技术创新"
+];
+
+let currentMessageIndex = 0;
+let currentCharIndex = 0;
+let isDeleting = false;
+let typingSpeed = 100;
+
+function type() {
+  const typewriterElement = document.querySelector('.typewriter-text');
+  if (!typewriterElement) return;
+
+  const currentMessage = messages[currentMessageIndex];
+  
+  if (isDeleting) {
+    typewriterElement.textContent = currentMessage.substring(0, currentCharIndex - 1);
+    currentCharIndex--;
+    typingSpeed = 50;
+  } else {
+    typewriterElement.textContent = currentMessage.substring(0, currentCharIndex + 1);
+    currentCharIndex++;
+    typingSpeed = 100;
+  }
+
+  if (!isDeleting && currentCharIndex === currentMessage.length) {
+    isDeleting = true;
+    typingSpeed = 2000;
+  } else if (isDeleting && currentCharIndex === 0) {
+    isDeleting = false;
+    currentMessageIndex = (currentMessageIndex + 1) % messages.length;
+    typingSpeed = 500;
+  }
+
+  setTimeout(type, typingSpeed);
+}
+
+// 页面加载完成后初始化打字机效果
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(type, 1000);
+});
+
+// 为了确保在 Astro 中也能工作
+if (document.readyState === 'complete') {
+  setTimeout(type, 1000);
+}
+</script>

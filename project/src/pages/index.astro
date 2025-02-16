@@ -1,0 +1,1012 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+
+const projects = [
+  {
+    title: '智能家居控制系统',
+    description: '基于React和Node.js的智能家居控制平台，支持多设备管理和场景联动',
+    image: 'https://images.unsplash.com/photo-1558002038-1055907df827?w=800',
+    tags: ['React', 'Node.js', 'MQTT', 'WebSocket'],
+    link: '/portfolio/smart-home'
+  },
+  {
+    title: '在线教育平台',
+    description: '使用Vue.js和Django开发的在线课程学习平台，支持视频课程和直播互动',
+    image: 'https://images.unsplash.com/photo-1501504905252-473c47e087f8?w=800',
+    tags: ['Vue.js', 'Django', 'WebRTC'],
+    link: '/portfolio/edu-platform'
+  },
+  {
+    title: '企业资源管理系统',
+    description: '基于React和Spring Boot的企业级ERP系统，提供完整的业务流程管理',
+    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800',
+    tags: ['React', 'Spring Boot', 'PostgreSQL'],
+    link: '/portfolio/erp-system'
+  }
+];
+
+const posts = [
+  {
+    title: 'React性能优化实践指南',
+    description: '深入探讨React应用性能优化的最佳实践，包括代码分割、状态管理等',
+    date: '2024-03-15',
+    image: 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800',
+    link: '/blog/react-performance'
+  },
+  {
+    title: '微服务架构设计模式',
+    description: '分享微服务架构中常用的设计模式和实践经验，助你构建可扩展的系统',
+    date: '2024-03-10',
+    image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800',
+    link: '/blog/microservice-patterns'
+  },
+  {
+    title: 'Docker容器化最佳实践',
+    description: '详解Docker容器化应用的关键技术点和最佳实践，提升部署效率',
+    date: '2024-03-05',
+    image: 'https://images.unsplash.com/photo-1605745341112-85968b19335b?w=800',
+    link: '/blog/docker-best-practices'
+  }
+];
+
+// 添加Three.js
+const threeJsScript = `
+  <script async src="https://unpkg.com/three@0.157.0/build/three.min.js"></script>
+  <script async src="https://unpkg.com/three@0.157.0/examples/js/controls/OrbitControls.js"></script>
+`;
+---
+
+<Layout title="王小明 | 个人网站">
+  <Fragment set:html={threeJsScript} />
+  <div id="bg-canvas" class="fixed top-0 left-0 w-full h-full -z-10"></div>
+  <Header />
+  <main>
+    <Hero />
+    
+    <!-- About Section -->
+    <section id="about" class="section-divider section-animate">
+      <div class="max-w-[108rem] mx-auto flex flex-col md:flex-row gap-16 items-center px-8">
+        <img 
+          src="/img/avatar.webp"
+          alt="关于我"
+          class="w-full max-w-[39.5rem] rounded-full aspect-[1/1.2] object-cover hover-card scroll-animate"
+          style="mask-image: radial-gradient(ellipse, #000 53%, #0000 68%);"
+        />
+        <div class="flex flex-col gap-8 scroll-animate">
+          <h2 class="color__gradiente text-[5rem]">关于我</h2>
+          <div class="text-[2.1rem] max-w-[70rem] text-gray-200 space-y-6">
+            <p class="scroll-animate">
+              大家好，我是王起哲，一名充满激情的全栈开发工程师。在过去的5年里，我一直致力于创造优秀的Web应用和提供卓越的用户体验。
+            </p>
+            <p class="scroll-animate">
+              我擅长解决复杂的技术挑战，有丰富的项目管理经验。作为技术团队的领导者，我注重代码质量和团队协作。
+            </p>
+            <p class="scroll-animate">
+              在技术栈方面，我精通前后端开发，对云原生技术和微服务架构有深入研究。我始终保持对新技术的学习热情。
+            </p>
+          </div>
+          <div class="flex gap-8 scroll-animate">
+            <a href="https://github.com" target="_blank" class="text-[2.5rem] text-[#dcd8fc] hover:text-[#E1306C] transition">
+              <i class="fab fa-github"></i>
+            </a>
+            <a href="https://linkedin.com" target="_blank" class="text-[2.5rem] text-[#dcd8fc] hover:text-[#0e76a8] transition">
+              <i class="fab fa-linkedin"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="section-divider section-animate">
+      <div class="max-w-[108rem] mx-auto px-8">
+        <h2 class="color__gradiente text-[5rem] text-center mb-16 scroll-animate">技术栈</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+          <!-- Frontend -->
+          <div class="tech-card frontend scroll-animate group">
+            <div class="tech-card-glow"></div>
+            <div class="tech-card-content">
+              <div class="tech-card-header">
+                <div class="tech-card-title">
+                  <div class="tech-card-icon">
+                    <i class="fas fa-code"></i>
+                  </div>
+                  <h3 class="text-[2.4rem] font-bold bg-clip-text text-transparent 
+                             bg-gradient-to-r from-purple-400 to-pink-500">前端开发</h3>
+                </div>
+                <div class="tech-card-badge">Frontend</div>
+              </div>
+              <ul class="tech-list">
+                <li class="tech-item group/item">
+                  <div class="tech-item-icon">
+                    <i class="fab fa-html5 text-[#E34F26]"></i>
+                  </div>
+                  <a href="/tech/html" class="tech-link">
+                    <span class="tech-name">HTML5 / CSS3</span>
+                    <span class="tech-description">现代网页开发基础</span>
+                  </a>
+                  <div class="tech-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                  </div>
+                </li>
+                <li class="tech-item group/item">
+                  <div class="tech-item-icon">
+                    <i class="fab fa-js text-[#F7DF1E]"></i>
+                  </div>
+                  <a href="/tech/javascript" class="tech-link">
+                    <span class="tech-name">JavaScript / TypeScript</span>
+                    <span class="tech-description">强大的脚本语言</span>
+                  </a>
+                  <div class="tech-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                  </div>
+                </li>
+                <li class="tech-item group/item">
+                  <div class="tech-item-icon">
+                    <i class="fab fa-react text-[#61DAFB]"></i>
+                  </div>
+                  <a href="/tech/react" class="tech-link">
+                    <span class="tech-name">React / Next.js</span>
+                    <span class="tech-description">流行的UI框架</span>
+                  </a>
+                  <div class="tech-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                  </div>
+                </li>
+                <li class="tech-item group/item">
+                  <div class="tech-item-icon">
+                    <i class="fab fa-vuejs text-[#4FC08D]"></i>
+                  </div>
+                  <a href="/tech/vue" class="tech-link">
+                    <span class="tech-name">Vue.js / Nuxt.js</span>
+                    <span class="tech-description">渐进式框架</span>
+                  </a>
+                  <div class="tech-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Backend -->
+          <div class="tech-card backend scroll-animate group delay-200">
+            <div class="tech-card-glow"></div>
+            <div class="tech-card-content">
+              <div class="tech-card-header">
+                <div class="tech-card-title">
+                  <div class="tech-card-icon">
+                    <i class="fas fa-server"></i>
+                  </div>
+                  <h3 class="text-[2.4rem] font-bold bg-clip-text text-transparent 
+                             bg-gradient-to-r from-blue-400 to-cyan-500">后端开发</h3>
+                </div>
+                <div class="tech-card-badge">Backend</div>
+              </div>
+              <ul class="tech-list">
+                <li class="tech-item group/item">
+                  <div class="tech-item-icon">
+                    <i class="fab fa-node-js text-[#339933]"></i>
+                  </div>
+                  <a href="/tech/nodejs" class="tech-link">
+                    <span class="tech-name">Node.js / Express</span>
+                    <span class="tech-description">高性能服务端</span>
+                  </a>
+                  <div class="tech-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                  </div>
+                </li>
+                <li class="tech-item group/item">
+                  <div class="tech-item-icon">
+                    <i class="fab fa-java text-[#007396]"></i>
+                  </div>
+                  <a href="/tech/java" class="tech-link">
+                    <span class="tech-name">Java / Spring Boot</span>
+                    <span class="tech-description">企业级框架</span>
+                  </a>
+                  <div class="tech-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                  </div>
+                </li>
+                <li class="tech-item group/item">
+                  <div class="tech-item-icon">
+                    <i class="fas fa-database text-[#336791]"></i>
+                  </div>
+                  <a href="/tech/database" class="tech-link">
+                    <span class="tech-name">MySQL / PostgreSQL</span>
+                    <span class="tech-description">关系型数据库</span>
+                  </a>
+                  <div class="tech-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                  </div>
+                </li>
+                <li class="tech-item group/item">
+                  <div class="tech-item-icon">
+                    <i class="fas fa-server text-[#DC382D]"></i>
+                  </div>
+                  <a href="/tech/nosql" class="tech-link">
+                    <span class="tech-name">Redis / MongoDB</span>
+                    <span class="tech-description">NoSQL数据库</span>
+                  </a>
+                  <div class="tech-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- System Tools -->
+          <div class="tech-card system scroll-animate group delay-400">
+            <div class="tech-card-glow"></div>
+            <div class="tech-card-content">
+              <div class="tech-card-header">
+                <div class="tech-card-title">
+                  <div class="tech-card-icon">
+                    <i class="fas fa-tools"></i>
+                  </div>
+                  <h3 class="text-[2.4rem] font-bold bg-clip-text text-transparent 
+                             bg-gradient-to-r from-amber-400 to-orange-500">系统工具</h3>
+                </div>
+                <div class="tech-card-badge">DevOps</div>
+              </div>
+              <ul class="tech-list">
+                <li class="tech-item group/item">
+                  <div class="tech-item-icon">
+                    <i class="fab fa-docker text-[#2496ED]"></i>
+                  </div>
+                  <a href="/tech/docker" class="tech-link">
+                    <span class="tech-name">Docker / Kubernetes</span>
+                    <span class="tech-description">容器化部署</span>
+                  </a>
+                  <div class="tech-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                  </div>
+                </li>
+                <li class="tech-item group/item">
+                  <div class="tech-item-icon">
+                    <i class="fab fa-linux text-[#FCC624]"></i>
+                  </div>
+                  <a href="/tech/linux" class="tech-link">
+                    <span class="tech-name">Linux / Shell</span>
+                    <span class="tech-description">系统运维</span>
+                  </a>
+                  <div class="tech-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                  </div>
+                </li>
+                <li class="tech-item group/item">
+                  <div class="tech-item-icon">
+                    <i class="fas fa-terminal text-[#4D4D4D]"></i>
+                  </div>
+                  <a href="/tech/terminal" class="tech-link">
+                    <span class="tech-name">命令行工具</span>
+                    <span class="tech-description">效率工具</span>
+                  </a>
+                  <div class="tech-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                  </div>
+                </li>
+                <li class="tech-item group/item">
+                  <div class="tech-item-icon">
+                    <i class="fas fa-code-branch text-[#F05032]"></i>
+                  </div>
+                  <a href="/tech/git" class="tech-link">
+                    <span class="tech-name">Git / GitHub</span>
+                    <span class="tech-description">版本控制</span>
+                  </a>
+                  <div class="tech-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Development Tools -->
+          <div class="tech-card tools scroll-animate group delay-600">
+            <div class="tech-card-glow"></div>
+            <div class="tech-card-content">
+              <div class="tech-card-header">
+                <div class="tech-card-title">
+                  <div class="tech-card-icon">
+                    <i class="fas fa-laptop-code"></i>
+                  </div>
+                  <h3 class="text-[2.4rem] font-bold bg-clip-text text-transparent 
+                             bg-gradient-to-r from-green-400 to-emerald-500">开发工具</h3>
+                </div>
+                <div class="tech-card-badge">Tools</div>
+              </div>
+              <ul class="tech-list">
+                <li class="tech-item group/item">
+                  <div class="tech-item-icon">
+                    <i class="fas fa-code text-[#007ACC]"></i>
+                  </div>
+                  <a href="/tech/ide" class="tech-link">
+                    <span class="tech-name">VS Code / IntelliJ IDEA</span>
+                    <span class="tech-description">代码编辑器</span>
+                  </a>
+                  <div class="tech-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                  </div>
+                </li>
+                <li class="tech-item group/item">
+                  <div class="tech-item-icon">
+                    <i class="fas fa-robot text-[#00A67E]"></i>
+                  </div>
+                  <a href="/tech/ai-chat" class="tech-link">
+                    <span class="tech-name">DeepSeek / ChatGPT</span>
+                    <span class="tech-description">AI助手</span>
+                  </a>
+                  <div class="tech-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                  </div>
+                </li>
+                <li class="tech-item group/item">
+                  <div class="tech-item-icon">
+                    <i class="fas fa-terminal text-[#83CD29]"></i>
+                  </div>
+                  <a href="/tech/ai-ide" class="tech-link">
+                    <span class="tech-name">Cursor / WindSurf</span>
+                    <span class="tech-description">智能IDE</span>
+                  </a>
+                  <div class="tech-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                  </div>
+                </li>
+                <li class="tech-item group/item">
+                  <div class="tech-item-icon">
+                    <i class="fas fa-magic text-[#CB3837]"></i>
+                  </div>
+                  <a href="/tech/ai-design" class="tech-link">
+                    <span class="tech-name">v0.dev / Bolt.new</span>
+                    <span class="tech-description">AI设计</span>
+                  </a>
+                  <div class="tech-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="section-divider section-animate">
+      <div class="max-w-[108rem] mx-auto px-8">
+        <h2 class="color__gradiente text-[5rem] text-center mb-16 scroll-animate">作品集</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {projects.map((project, index) => (
+            <div class={`glass-morphism p-6 hover-card scroll-animate delay-${index * 200}`}>
+              <img 
+                src={project.image}
+                alt={project.title}
+                class="w-full aspect-video object-cover rounded-lg mb-4"
+              />
+              <h3 class="color__gradiente text-[2.4rem] mb-2">{project.title}</h3>
+              <p class="text-[1.6rem] text-gray-300 mb-4">{project.description}</p>
+              <div class="flex flex-wrap gap-2 mb-4">
+                {project.tags.map(tag => (
+                  <span class="px-3 py-1 text-[1.4rem] bg-black/20 rounded-full">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+              <a href={project.link} class="more-button">
+                查看详情
+                <i class="fas fa-arrow-right"></i>
+              </a>
+            </div>
+          ))}
+        </div>
+        <div class="text-center mt-16">
+          <a href="/portfolio" class="more-button">
+            查看更多作品
+            <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="blog" class="section-divider section-animate">
+      <div class="max-w-[108rem] mx-auto px-8">
+        <h2 class="color__gradiente text-[5rem] text-center mb-16 scroll-animate">最新博客</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {posts.map((post, index) => (
+            <div class={`glass-morphism p-6 hover-card scroll-animate delay-${index * 200}`}>
+              <img 
+                src={post.image}
+                alt={post.title}
+                class="w-full aspect-video object-cover rounded-lg mb-4"
+              />
+              <h3 class="color__gradiente text-[2.4rem] mb-2">{post.title}</h3>
+              <p class="text-[1.6rem] text-gray-300 mb-4">{post.description}</p>
+              <div class="flex justify-between items-center">
+                <span class="text-[1.4rem] text-gray-400">{post.date}</span>
+                <a href={post.link} class="more-button">
+                  阅读全文
+                  <i class="fas fa-arrow-right"></i>
+                </a>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div class="text-center mt-16">
+          <a href="/blog" class="more-button">
+            浏览更多文章
+            <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  /* 基础动画类 */
+  .section-animate {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform, opacity;
+  }
+
+  .section-animate.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .section-animate.inactive {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  /* 页面背景 */
+  main {
+    background-color: #0a0a0a;
+    background-image: 
+      radial-gradient(circle at 20% 20%, rgba(147, 51, 234, 0.15) 0%, transparent 25%),
+      radial-gradient(circle at 80% 80%, rgba(236, 72, 153, 0.15) 0%, transparent 25%),
+      radial-gradient(circle at 50% 50%, rgba(30, 30, 30, 1) 0%, rgba(10, 10, 10, 1) 100%);
+    position: relative;
+  }
+
+  main::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('/noise.png') repeat;
+    opacity: 0.03;
+    pointer-events: none;
+  }
+
+  /* 卡片基础样式 */
+  .bg-black\/20 {
+    background: linear-gradient(165deg, rgba(40, 40, 40, 0.8), rgba(20, 20, 20, 0.8));
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    box-shadow: 
+      0 4px 24px rgba(0, 0, 0, 0.3),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+  }
+
+  /* 卡片悬浮效果 */
+  .hover-card {
+    transition: all 0.3s ease;
+  }
+
+  .hover-card:hover {
+    transform: translateY(-5px);
+    background: linear-gradient(165deg, rgba(50, 50, 50, 0.8), rgba(30, 30, 30, 0.8));
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 
+      0 8px 32px rgba(0, 0, 0, 0.3),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+  }
+
+  /* 渐变文字 */
+  .color__gradiente {
+    background: linear-gradient(135deg, #9333ea, #ec4899);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* 更多按钮样式 */
+  .more-button {
+    @apply inline-flex items-center gap-2 text-[1.6rem] text-purple-400 hover:text-pink-500 transition-colors;
+  }
+
+  /* 技术栈卡片边框 */
+  .border-\[\#7c39fd47\] {
+    border-color: rgba(124, 57, 253, 0.1);
+  }
+
+  /* 技术链接悬浮效果 */
+  .tech-link {
+    position: relative;
+    transition: color 0.3s ease;
+  }
+
+  .tech-link:hover {
+    color: #ec4899;
+  }
+
+  .tech-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: linear-gradient(to right, #9333ea, #ec4899);
+    transition: width 0.3s ease;
+  }
+
+  .tech-link:hover::after {
+    width: 100%;
+  }
+
+  /* 分隔区域样式 */
+  .section-divider {
+    position: relative;
+    padding: 8rem 0;
+  }
+
+  .section-divider::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 1px;
+    background: linear-gradient(
+      90deg, 
+      transparent, 
+      rgba(147, 51, 234, 0.2), 
+      rgba(236, 72, 153, 0.2), 
+      transparent
+    );
+  }
+
+  /* 技术栈新样式 */
+  .tech-card {
+    @apply relative rounded-[20px] p-1 overflow-hidden transition-all duration-500;
+    background: linear-gradient(
+      165deg,
+      rgba(30, 30, 63, 0.4),
+      rgba(30, 30, 63, 0.2)
+    );
+    transform-style: preserve-3d;
+    perspective: 1000px;
+  }
+
+  .tech-card:hover {
+    transform: translateY(-5px) rotateX(2deg);
+  }
+
+  .tech-card-glow {
+    @apply absolute inset-0 opacity-0 transition-opacity duration-500;
+    background: radial-gradient(
+      600px circle at var(--mouse-x) var(--mouse-y),
+      rgba(255, 255, 255, 0.04),
+      transparent 40%
+    );
+  }
+
+  .tech-card:hover .tech-card-glow {
+    @apply opacity-100;
+  }
+
+  .tech-card-content {
+    @apply relative rounded-[19px] p-8;
+    background: linear-gradient(
+      165deg,
+      rgba(26, 26, 46, 0.8),
+      rgba(26, 26, 46, 0.6)
+    );
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .tech-card-header {
+    @apply flex justify-between items-start mb-8;
+  }
+
+  .tech-card-title {
+    @apply flex items-center gap-4;
+  }
+
+  .tech-card-icon {
+    @apply w-12 h-12 flex items-center justify-center text-[2.4rem] 
+           rounded-xl relative z-10;
+    background: rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+  }
+
+  .tech-card-badge {
+    @apply px-4 py-1 text-[1.4rem] rounded-full
+           text-gray-400 font-medium tracking-wider
+           transition-all duration-300;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .tech-card:hover .tech-card-badge {
+    @apply text-gray-200;
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .tech-list {
+    @apply space-y-4;
+  }
+
+  .tech-item {
+    @apply flex items-center gap-4 p-4 rounded-xl
+           bg-black/10 backdrop-blur-sm
+           transition-all duration-300 relative
+           overflow-hidden;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+  }
+
+  .tech-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.03),
+      transparent
+    );
+    transform: translateX(-100%);
+    transition: transform 0.5s ease;
+  }
+
+  .tech-item:hover::before {
+    transform: translateX(100%);
+  }
+
+  .tech-item:hover {
+    @apply bg-black/20;
+    transform: translateX(5px);
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+
+  .tech-item-icon {
+    @apply w-10 h-10 flex items-center justify-center text-[2rem]
+           rounded-lg relative z-10;
+    background: rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+  }
+
+  .tech-name {
+    @apply text-[1.6rem] font-medium text-gray-200 transition-colors duration-300;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+
+  .tech-description {
+    @apply text-[1.4rem] text-gray-400 transition-colors duration-300;
+  }
+
+  .tech-item:hover .tech-name {
+    @apply text-white;
+  }
+
+  .tech-item:hover .tech-description {
+    @apply text-gray-300;
+  }
+
+  .tech-arrow {
+    @apply w-8 h-8 flex items-center justify-center
+           text-gray-400 opacity-0 -translate-x-4
+           transition-all duration-300 relative z-10;
+  }
+
+  .tech-item:hover .tech-arrow {
+    @apply opacity-100 translate-x-0 text-white;
+  }
+
+  /* 为不同类型的卡片添加特色效果 */
+  .tech-card.frontend .tech-card-icon {
+    background: linear-gradient(135deg, rgba(147, 51, 234, 0.1), transparent);
+    box-shadow: 0 0 20px rgba(147, 51, 234, 0.1);
+  }
+
+  .tech-card.backend .tech-card-icon {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), transparent);
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.1);
+  }
+
+  .tech-card.system .tech-card-icon {
+    background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), transparent);
+    box-shadow: 0 0 20px rgba(251, 191, 36, 0.1);
+  }
+
+  .tech-card.tools .tech-card-icon {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), transparent);
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.1);
+  }
+
+  /* 呼吸动画 */
+  @keyframes breathe {
+    0%, 100% { 
+      filter: brightness(1) saturate(1);
+      transform: scale(1);
+    }
+    50% { 
+      filter: brightness(1.1) saturate(1.2);
+      transform: scale(1.02);
+    }
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+
+  @keyframes glow {
+    0%, 100% { 
+      box-shadow: 0 0 5px rgba(147, 51, 234, 0.2),
+                 0 0 20px rgba(147, 51, 234, 0.1),
+                 0 0 40px rgba(147, 51, 234, 0.05);
+    }
+    50% { 
+      box-shadow: 0 0 10px rgba(147, 51, 234, 0.3),
+                 0 0 30px rgba(147, 51, 234, 0.2),
+                 0 0 60px rgba(147, 51, 234, 0.1);
+    }
+  }
+
+  .tech-card {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .tech-card-icon {
+    animation: breathe 4s ease-in-out infinite;
+  }
+
+  .tech-card:hover .tech-card-icon {
+    animation: glow 2s ease-in-out infinite;
+  }
+
+  /* 粒子连线效果 */
+  .tech-item {
+    position: relative;
+  }
+
+  .tech-item::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: -20px;
+    width: 40px;
+    height: 2px;
+    background: linear-gradient(90deg, 
+      rgba(147, 51, 234, 0.2), 
+      rgba(236, 72, 153, 0.2)
+    );
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+
+  .tech-item:hover::after {
+    transform: scaleX(1);
+  }
+
+  /* 3D翻转效果 */
+  .tech-card-content {
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .tech-card:hover .tech-card-content {
+    transform: rotateY(5deg) rotateX(5deg);
+  }
+
+  /* 动态渐变背景 */
+  .tech-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      45deg,
+      rgba(147, 51, 234, 0.1),
+      rgba(236, 72, 153, 0.1),
+      rgba(147, 51, 234, 0.1)
+    );
+    background-size: 200% 200%;
+    animation: gradientMove 8s linear infinite;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .tech-card:hover::before {
+    opacity: 1;
+  }
+
+  @keyframes gradientMove {
+    0% { background-position: 0% 0%; }
+    50% { background-position: 100% 100%; }
+    100% { background-position: 0% 0%; }
+  }
+</style>
+
+<script>
+  // 监听滚动，触发动画
+  const observerOptions = {
+    root: null,
+    rootMargin: '-10% 0px', // 稍微延迟触发点，使动画更自然
+    threshold: [0, 0.25] // 添加多个阈值以实现更平滑的过渡
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      // 计算元素可见比例，用于平滑过渡
+      const ratio = entry.intersectionRatio;
+      const target = entry.target;
+
+      if (entry.isIntersecting) {
+        // 元素进入视口
+        requestAnimationFrame(() => {
+          target.classList.add('active');
+          target.classList.remove('inactive');
+        });
+      } else {
+        // 元素离开视口
+        requestAnimationFrame(() => {
+          target.classList.remove('active');
+          target.classList.add('inactive');
+        });
+      }
+    });
+  }, observerOptions);
+
+  // 初始化函数
+  function initAnimations() {
+    const sections = document.querySelectorAll('.section-animate');
+    sections.forEach(section => {
+      // 添加初始类
+      section.classList.add('inactive');
+      // 开始观察
+      observer.observe(section);
+    });
+  }
+
+  // 页面加载完成后初始化
+  document.addEventListener('DOMContentLoaded', initAnimations);
+
+  // 为了确保在 Astro 中也能工作
+  if (document.readyState === 'complete') {
+    initAnimations();
+  }
+
+  // 添加鼠标跟随发光效果
+  document.addEventListener('DOMContentLoaded', () => {
+    const cards = document.querySelectorAll('.tech-card');
+    
+    cards.forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        card.style.setProperty('--mouse-x', `${x}px`);
+        card.style.setProperty('--mouse-y', `${y}px`);
+      });
+    });
+  });
+
+  // Three.js 背景动画
+  function initThreeBackground() {
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    
+    const canvas = document.getElementById('bg-canvas');
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    canvas.appendChild(renderer.domElement);
+
+    // 创建粒子系统
+    const particlesGeometry = new THREE.BufferGeometry();
+    const particlesCount = 1000;
+    const positions = new Float32Array(particlesCount * 3);
+    const colors = new Float32Array(particlesCount * 3);
+
+    for(let i = 0; i < particlesCount * 3; i += 3) {
+      positions[i] = (Math.random() - 0.5) * 10;
+      positions[i + 1] = (Math.random() - 0.5) * 10;
+      positions[i + 2] = (Math.random() - 0.5) * 10;
+
+      colors[i] = Math.random();
+      colors[i + 1] = Math.random();
+      colors[i + 2] = Math.random();
+    }
+
+    particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+    const particlesMaterial = new THREE.PointsMaterial({
+      size: 0.02,
+      vertexColors: true,
+      transparent: true,
+      opacity: 0.5
+    });
+
+    const particleSystem = new THREE.Points(particlesGeometry, particlesMaterial);
+    scene.add(particleSystem);
+
+    camera.position.z = 5;
+
+    // 动画循环
+    function animate() {
+      requestAnimationFrame(animate);
+      
+      particleSystem.rotation.x += 0.001;
+      particleSystem.rotation.y += 0.001;
+
+      renderer.render(scene, camera);
+    }
+
+    animate();
+
+    // 响应式调整
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+  }
+
+  // 页面加载完成后初始化Three.js背景
+  if (document.readyState === 'complete') {
+    initThreeBackground();
+  } else {
+    window.addEventListener('load', initThreeBackground);
+  }
+
+  // 添加鼠标交互效果
+  document.addEventListener('mousemove', (e) => {
+    const cards = document.querySelectorAll('.tech-card');
+    
+    cards.forEach(card => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      
+      const angleX = (y - centerY) / 30;
+      const angleY = (x - centerX) / 30;
+      
+      card.style.transform = `
+        perspective(1000px) 
+        rotateX(${-angleX}deg) 
+        rotateY(${angleY}deg)
+        translateZ(10px)
+      `;
+    });
+  });
+
+  // 恢复卡片原始状态
+  document.addEventListener('mouseleave', () => {
+    const cards = document.querySelectorAll('.tech-card');
+    cards.forEach(card => {
+      card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateZ(0)';
+    });
+  });
+</script>

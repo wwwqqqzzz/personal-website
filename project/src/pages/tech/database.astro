@@ -1,0 +1,77 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title="MySQL/PostgreSQL | 王起哲的个人网站">
+  <main class="min-h-screen bg-[#1E1E3F] py-20 px-8">
+    <div class="max-w-[108rem] mx-auto">
+      <div class="flex justify-center mb-16">
+        <div class="text-center">
+          <div class="bg-[#4479A1] w-24 h-24 rounded-xl mb-6 mx-auto flex items-center justify-center">
+            <i class="fas fa-database text-[4rem] text-white"></i>
+          </div>
+          <h1 class="text-[4rem] font-bold text-[#B362FF] mb-4">MySQL / PostgreSQL</h1>
+          <p class="text-[2rem] text-gray-300">主流的关系型数据库管理系统，提供强大的数据存储和查询能力。</p>
+        </div>
+      </div>
+
+      <div class="glass-morphism p-12 rounded-[20px] mb-12">
+        <h2 class="text-[2.4rem] font-semibold mb-8 text-[#B362FF]">主要特性</h2>
+        <div class="grid grid-cols-2 gap-6">
+          <div class="flex items-center gap-4">
+            <i class="fas fa-check text-[#50FA7B]"></i>
+            <span class="text-[1.8rem] text-gray-200">事务处理</span>
+          </div>
+          <div class="flex items-center gap-4">
+            <i class="fas fa-check text-[#50FA7B]"></i>
+            <span class="text-[1.8rem] text-gray-200">索引优化</span>
+          </div>
+          <div class="flex items-center gap-4">
+            <i class="fas fa-check text-[#50FA7B]"></i>
+            <span class="text-[1.8rem] text-gray-200">存储过程</span>
+          </div>
+          <div class="flex items-center gap-4">
+            <i class="fas fa-check text-[#50FA7B]"></i>
+            <span class="text-[1.8rem] text-gray-200">主从复制</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass-morphism p-12 rounded-[20px] mb-12">
+        <h2 class="text-[2.4rem] font-semibold mb-8 text-[#B362FF]">学习资源</h2>
+        <div class="space-y-4">
+          <a href="https://dev.mysql.com/doc/" target="_blank" 
+             class="flex items-center gap-4 text-[1.8rem] text-gray-200 hover:text-[#50FA7B] transition-colors">
+            <i class="fas fa-external-link-alt"></i>
+            <span>MySQL 文档</span>
+          </a>
+          <a href="https://www.postgresql.org/docs/" target="_blank"
+             class="flex items-center gap-4 text-[1.8rem] text-gray-200 hover:text-[#50FA7B] transition-colors">
+            <i class="fas fa-external-link-alt"></i>
+            <span>PostgreSQL 文档</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <a href="/#skills" 
+           class="inline-flex items-center gap-3 px-6 py-3 text-[1.8rem] text-[#B362FF] hover:text-[#50FA7B] 
+                  bg-[rgba(147,98,255,0.1)] hover:bg-[rgba(80,250,123,0.1)] rounded-xl
+                  border border-[#B362FF] hover:border-[#50FA7B] transition-all duration-300">
+          <i class="fas fa-arrow-left text-[1.6rem]"></i>
+          <span>返回技术栈</span>
+        </a>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .glass-morphism {
+    background: rgba(30, 30, 63, 0.7);
+    border: 1px solid rgba(147, 51, 234, 0.1);
+    box-shadow: 
+      0 4px 24px rgba(0, 0, 0, 0.3),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+  }
+</style> 

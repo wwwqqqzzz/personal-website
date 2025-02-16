@@ -1,0 +1,50 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const posts = [
+  {
+    title: '如何优化React应用性能',
+    description: '探讨React应用性能优化的最佳实践',
+    date: '2024-03-15',
+    image: 'https://example.com/react-perf.jpg',
+    link: '#'
+  },
+  // 添加更多博客文章...
+];
+---
+
+<Layout title="博客 | 技术分享">
+  <div class="min-h-screen py-20 px-8">
+    <div class="max-w-[108rem] mx-auto">
+      <h1 class="color__gradiente text-[5rem] mb-16 text-center">技术博客</h1>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {posts.map(post => (
+          <div class="glass-morphism p-6 hover-card">
+            <img 
+              src={post.image}
+              alt={post.title}
+              class="w-full aspect-video object-cover rounded-lg mb-4"
+            />
+            <h3 class="color__gradiente text-[2.4rem] mb-2">{post.title}</h3>
+            <p class="text-[1.6rem] text-gray-300 mb-4">{post.description}</p>
+            <div class="flex justify-between items-center">
+              <span class="text-[1.4rem] text-gray-400">{post.date}</span>
+              <a href={post.link} class="more-button">
+                阅读全文
+                <i class="fas fa-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
+      
+      <div class="text-center mt-16">
+        <a href="/#blog" class="more-button">
+          <i class="fas fa-arrow-left"></i>
+          返回首页
+        </a>
+      </div>
+    </div>
+  </div>
+</Layout>
