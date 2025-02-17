@@ -1,0 +1,13 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import ArchiveManagement from '../../components/admin/ArchiveManagement';
+---
+
+<AdminLayout title="文章归档">
+  <div class="container mx-auto px-4 py-8">
+    <div class="flex justify-between items-center mb-6">
+      <h1 class="text-2xl font-bold text-gray-300">文章归档</h1>
+    </div>
+    <ArchiveManagement client:load />
+  </div>
+</AdminLayout> 

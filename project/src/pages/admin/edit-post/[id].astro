@@ -1,0 +1,74 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+import PostEditor from '../../../components/admin/PostEditor';
+---
+
+<AdminLayout title="编辑文章">
+  <div class="container mx-auto px-4">
+    <PostEditor 
+      client:load 
+      onSave={async (data) => {
+        try {
+          const postId = window.location.pathname.split('/').pop();
+          const response = await fetch(`http://localhost:8080/api/posts/${postId}`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
+            body: JSON.stringify({
+              title: data.title,
+              content: data.content
+            })
+          });
+
+          if (response.ok) {
+            window.location.href = '/admin/posts';
+          } else {
+            alert('保存失败，请重试');
+          }
+        } catch (error) {
+          console.error('Error updating post:', error);
+          alert('保存失败，请重试');
+        }
+      }} 
+    />
+  </div>
+</AdminLayout>
+
+<script>
+// 检查登录状态
+if (!localStorage.getItem('token')) {
+  window.location.href = '/admin/login';
+}
+
+// 获取文章数据
+async function fetchPost() {
+  try {
+    const postId = window.location.pathname.split('/').pop();
+    const response = await fetch(`http://localhost:8080/api/posts/${postId}`, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+
+    if (response.ok) {
+      const post = await response.json();
+      const editor = document.querySelector('post-editor');
+      if (editor) {
+        editor.setAttribute('initialTitle', post.title);
+        editor.setAttribute('initialContent', post.content);
+      }
+    } else {
+      alert('获取文章失败，请重试');
+      window.location.href = '/admin/posts';
+    }
+  } catch (error) {
+    console.error('Error fetching post:', error);
+    alert('获取文章失败，请重试');
+    window.location.href = '/admin/posts';
+  }
+}
+
+fetchPost();
+</script> 

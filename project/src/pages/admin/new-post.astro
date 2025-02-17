@@ -1,0 +1,56 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import PostEditor from '../../components/admin/PostEditor';
+---
+
+<AdminLayout title="写文章">
+  <PostEditor 
+    client:load 
+    initialContent=""
+    initialTitle=""
+    initialCategory=""
+    initialTags={[]}
+    initialSummary=""
+    initialLayout="single"
+    initialType="article"
+    initialStatus="draft"
+    onSave={async (data) => {
+      try {
+        const response = await fetch('http://localhost:8080/api/posts', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+          },
+          body: JSON.stringify({
+            title: data.title,
+            content: data.content,
+            cover: data.cover,
+            category: data.category,
+            tags: data.tags,
+            summary: data.summary,
+            layout: data.layout,
+            type: data.type,
+            status: data.status
+          })
+        });
+
+        if (response.ok) {
+          window.location.href = '/admin/posts';
+        } else {
+          alert('保存失败，请重试');
+        }
+      } catch (error) {
+        console.error('Error saving post:', error);
+        alert('保存失败，请重试');
+      }
+    }}
+  />
+</AdminLayout>
+
+<script>
+// 检查登录状态
+if (!localStorage.getItem('token')) {
+  window.location.href = '/admin/login';
+}
+</script> 

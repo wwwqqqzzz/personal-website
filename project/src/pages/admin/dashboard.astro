@@ -1,0 +1,96 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+---
+
+<AdminLayout title="仪表盘">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    <!-- 文章统计 -->
+    <div class="bg-gray-900 rounded-lg p-6">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-xl font-semibold text-gray-300">文章</h3>
+        <i class="fas fa-newspaper text-2xl text-purple-400"></i>
+      </div>
+      <div class="text-3xl font-bold text-white mb-2">0</div>
+      <div class="text-sm text-gray-400">已发布文章数量</div>
+    </div>
+
+    <!-- 作品统计 -->
+    <div class="bg-gray-900 rounded-lg p-6">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-xl font-semibold text-gray-300">作品</h3>
+        <i class="fas fa-briefcase text-2xl text-purple-400"></i>
+      </div>
+      <div class="text-3xl font-bold text-white mb-2">0</div>
+      <div class="text-sm text-gray-400">作品集数量</div>
+    </div>
+
+    <!-- 访问统计 -->
+    <div class="bg-gray-900 rounded-lg p-6">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-xl font-semibold text-gray-300">访问</h3>
+        <i class="fas fa-eye text-2xl text-purple-400"></i>
+      </div>
+      <div class="text-3xl font-bold text-white mb-2">0</div>
+      <div class="text-sm text-gray-400">今日访问量</div>
+    </div>
+
+    <!-- 评论统计 -->
+    <div class="bg-gray-900 rounded-lg p-6">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-xl font-semibold text-gray-300">评论</h3>
+        <i class="fas fa-comments text-2xl text-purple-400"></i>
+      </div>
+      <div class="text-3xl font-bold text-white mb-2">0</div>
+      <div class="text-sm text-gray-400">未读评论数</div>
+    </div>
+  </div>
+
+  <!-- 快捷操作 -->
+  <div class="bg-gray-900 rounded-lg p-6 mb-8">
+    <h3 class="text-xl font-semibold text-gray-300 mb-4">快捷操作</h3>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <a 
+        href="/admin/posts/new" 
+        class="flex items-center justify-center gap-2 p-4 bg-purple-600 hover:bg-purple-700 
+               text-white rounded-lg transition-colors"
+      >
+        <i class="fas fa-plus"></i>
+        写文章
+      </a>
+      <a 
+        href="/admin/portfolio/new" 
+        class="flex items-center justify-center gap-2 p-4 bg-purple-600 hover:bg-purple-700 
+               text-white rounded-lg transition-colors"
+      >
+        <i class="fas fa-plus"></i>
+        添加作品
+      </a>
+      <a 
+        href="/admin/posts" 
+        class="flex items-center justify-center gap-2 p-4 bg-gray-800 hover:bg-gray-700 
+               text-white rounded-lg transition-colors"
+      >
+        <i class="fas fa-list"></i>
+        管理文章
+      </a>
+      <a 
+        href="/admin/portfolio" 
+        class="flex items-center justify-center gap-2 p-4 bg-gray-800 hover:bg-gray-700 
+               text-white rounded-lg transition-colors"
+      >
+        <i class="fas fa-list"></i>
+        管理作品
+      </a>
+    </div>
+  </div>
+
+  <!-- 最近文章 -->
+  <div class="bg-gray-900 rounded-lg p-6">
+    <h3 class="text-xl font-semibold text-gray-300 mb-4">最近文章</h3>
+    <div class="space-y-4">
+      <div class="text-gray-400 text-center py-8">
+        暂无文章
+      </div>
+    </div>
+  </div>
+</AdminLayout> 
