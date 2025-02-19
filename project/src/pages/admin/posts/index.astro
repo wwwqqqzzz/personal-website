@@ -1,0 +1,137 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+import { supabase } from '../../../lib/supabase';
+import type { Database } from '../../../lib/database.types';
+
+type Post = Database['public']['Tables']['posts']['Row'];
+
+// 获取文章列表
+const { data: posts, error } = await supabase
+  .from('posts')
+  .select('*')
+  .order('created_at', { ascending: false });
+
+if (error) {
+  console.error('获取文章列表失败:', error);
+}
+---
+
+<AdminLayout title="文章管理">
+  <div class="space-y-6">
+    <!-- 头部 -->
+    <div class="flex justify-between items-center">
+      <div>
+        <h3 class="text-2xl font-bold text-white">文章管理</h3>
+        <p class="text-gray-400 mt-1">共 {posts?.length || 0} 篇文章</p>
+      </div>
+      <a
+        href="/admin/posts/new"
+        class="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
+      >
+        <i class="fas fa-plus mr-2"></i>
+        新建文章
+      </a>
+    </div>
+
+    <!-- 文章列表 -->
+    <div class="bg-gray-900/50 backdrop-blur-lg rounded-lg border border-purple-500/20 overflow-hidden">
+      <table class="w-full text-left">
+        <thead>
+          <tr class="border-b border-purple-500/20">
+            <th class="px-6 py-4 text-gray-300 font-medium">标题</th>
+            <th class="px-6 py-4 text-gray-300 font-medium">分类</th>
+            <th class="px-6 py-4 text-gray-300 font-medium">状态</th>
+            <th class="px-6 py-4 text-gray-300 font-medium">创建时间</th>
+            <th class="px-6 py-4 text-gray-300 font-medium text-right">操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            posts?.map((post) => (
+              <tr class="border-b border-purple-500/10 hover:bg-purple-500/5">
+                <td class="px-6 py-4">
+                  <div class="flex items-center">
+                    {post.cover_image && (
+                      <img
+                        src={post.cover_image}
+                        alt={post.title}
+                        class="w-10 h-10 rounded object-cover mr-3"
+                      />
+                    )}
+                    <div>
+                      <div class="text-white font-medium">{post.title}</div>
+                      <div class="text-gray-400 text-sm mt-0.5">
+                        {post.tags?.join(', ')}
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td class="px-6 py-4">
+                  <span class="px-3 py-1 bg-purple-500/10 text-purple-400 rounded-full text-sm">
+                    {post.category}
+                  </span>
+                </td>
+                <td class="px-6 py-4">
+                  {post.published ? (
+                    <span class="px-3 py-1 bg-green-500/10 text-green-400 rounded-full text-sm">
+                      已发布
+                    </span>
+                  ) : (
+                    <span class="px-3 py-1 bg-gray-500/10 text-gray-400 rounded-full text-sm">
+                      草稿
+                    </span>
+                  )}
+                </td>
+                <td class="px-6 py-4 text-gray-300">
+                  {new Date(post.created_at).toLocaleDateString('zh-CN')}
+                </td>
+                <td class="px-6 py-4">
+                  <div class="flex justify-end space-x-3">
+                    <a
+                      href={`/admin/posts/${post.id}/edit`}
+                      class="text-gray-400 hover:text-white transition-colors"
+                    >
+                      <i class="fas fa-edit"></i>
+                    </a>
+                    <button
+                      class="text-gray-400 hover:text-red-400 transition-colors"
+                      data-post-id={post.id}
+                      onclick="deletePost(this)"
+                    >
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</AdminLayout>
+
+<script>
+  async function deletePost(button: HTMLButtonElement) {
+    const postId = button.dataset.postId;
+    if (!postId) return;
+
+    if (!confirm('确定要删除这篇文章吗？')) return;
+
+    try {
+      const response = await fetch(`/api/posts/${postId}`, {
+        method: 'DELETE'
+      });
+
+      if (!response.ok) {
+        throw new Error('删除失败');
+      }
+
+      // 删除成功后刷新页面
+      window.location.reload();
+    } catch (error) {
+      console.error('删除文章错误:', error);
+      alert('删除失败，请重试');
+    }
+  }
+</script> 

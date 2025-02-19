@@ -1,0 +1,25 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SignInComponent from '../components/auth/SignInComponent';
+
+const publishableKey = import.meta.env.PUBLIC_CLERK_PUBLISHABLE_KEY;
+---
+
+<Layout title="登录">
+  <main class="min-h-screen flex items-center justify-center">
+    <div class="w-full max-w-6xl p-8">
+      <div class="text-center mb-8">
+        <h1 class="text-5xl font-bold text-white mb-4">欢迎回来</h1>
+        <p class="text-xl text-gray-400 mb-4">请登录以继续</p>
+        <div class="flex items-center justify-center gap-2 text-lg">
+          <span class="text-gray-400">还没有账号？</span>
+          <a href="/sign-up" class="text-purple-500 hover:text-purple-400 font-medium">立即注册</a>
+        </div>
+      </div>
+      
+      <div class="bg-gray-900/50 backdrop-blur-lg rounded-2xl p-12 border border-purple-500/20 min-h-[600px]">
+        <SignInComponent client:only="react" />
+      </div>
+    </div>
+  </main>
+</Layout> 

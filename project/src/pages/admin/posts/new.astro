@@ -1,0 +1,317 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+---
+
+<AdminLayout title="新建文章">
+  <div class="max-w-4xl mx-auto space-y-6">
+    <div class="flex justify-between items-center">
+      <h3 class="text-2xl font-bold text-white">新建文章</h3>
+      <a href="/admin/posts" class="text-gray-400 hover:text-white">
+        <i class="fas fa-arrow-left mr-2"></i>
+        返回列表
+      </a>
+    </div>
+
+    <form id="postForm" class="space-y-6">
+      <div class="grid grid-cols-2 gap-6">
+        <!-- 标题 -->
+        <div class="col-span-2">
+          <label for="title" class="block text-gray-300 text-sm font-medium mb-2">标题</label>
+          <input
+            type="text"
+            id="title"
+            name="title"
+            required
+            class="w-full px-4 py-2 bg-gray-900/50 border border-purple-500/20 rounded-lg text-white focus:outline-none focus:border-purple-500"
+            placeholder="请输入文章标题"
+          />
+        </div>
+
+        <!-- 分类 -->
+        <div>
+          <label for="category" class="block text-gray-300 text-sm font-medium mb-2">分类</label>
+          <input
+            type="text"
+            id="category"
+            name="category"
+            required
+            class="w-full px-4 py-2 bg-gray-900/50 border border-purple-500/20 rounded-lg text-white focus:outline-none focus:border-purple-500"
+            placeholder="请输入分类"
+          />
+        </div>
+
+        <!-- 标签 -->
+        <div>
+          <label for="tags" class="block text-gray-300 text-sm font-medium mb-2">标签</label>
+          <input
+            type="text"
+            id="tags"
+            name="tags"
+            class="w-full px-4 py-2 bg-gray-900/50 border border-purple-500/20 rounded-lg text-white focus:outline-none focus:border-purple-500"
+            placeholder="多个标签用逗号分隔"
+          />
+        </div>
+
+        <!-- 封面图 -->
+        <div class="col-span-2">
+          <label class="block text-gray-300 text-sm font-medium mb-2">封面图</label>
+          <div class="flex items-start space-x-4">
+            <div class="flex-1">
+              <div
+                class="w-full h-40 border-2 border-dashed border-purple-500/20 rounded-lg flex items-center justify-center cursor-pointer hover:border-purple-500/40 transition-colors relative overflow-hidden"
+                id="dropZone"
+              >
+                <input
+                  type="file"
+                  id="coverImage"
+                  name="coverImage"
+                  accept="image/*"
+                  class="absolute inset-0 opacity-0 cursor-pointer"
+                />
+                <div class="text-center" id="uploadText">
+                  <i class="fas fa-cloud-upload-alt text-3xl text-gray-400 mb-2"></i>
+                  <p class="text-gray-400">点击或拖拽图片到这里上传</p>
+                  <p class="text-gray-500 text-sm mt-1">支持 JPG、PNG、GIF 格式</p>
+                </div>
+                <div class="hidden" id="previewContainer">
+                  <img src="" alt="预览" id="imagePreview" class="w-full h-full object-cover" />
+                </div>
+              </div>
+              <input type="hidden" id="coverImageUrl" name="coverImageUrl" />
+            </div>
+            <button
+              type="button"
+              id="removeCoverBtn"
+              class="px-3 py-1 bg-red-500/10 text-red-400 rounded hover:bg-red-500/20 transition-colors hidden"
+            >
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- 摘要 -->
+        <div class="col-span-2">
+          <label for="summary" class="block text-gray-300 text-sm font-medium mb-2">摘要</label>
+          <textarea
+            id="summary"
+            name="summary"
+            required
+            rows="3"
+            class="w-full px-4 py-2 bg-gray-900/50 border border-purple-500/20 rounded-lg text-white focus:outline-none focus:border-purple-500"
+            placeholder="请输入文章摘要"
+          ></textarea>
+        </div>
+
+        <!-- 内容 -->
+        <div class="col-span-2">
+          <label for="content" class="block text-gray-300 text-sm font-medium mb-2">内容</label>
+          <textarea
+            id="content"
+            name="content"
+            required
+            rows="20"
+            class="w-full px-4 py-2 bg-gray-900/50 border border-purple-500/20 rounded-lg text-white focus:outline-none focus:border-purple-500 font-mono"
+            placeholder="请输入文章内容（支持Markdown）"
+          ></textarea>
+        </div>
+
+        <!-- 布局 -->
+        <div>
+          <label for="layout" class="block text-gray-300 text-sm font-medium mb-2">布局</label>
+          <select
+            id="layout"
+            name="layout"
+            class="w-full px-4 py-2 bg-gray-900/50 border border-purple-500/20 rounded-lg text-white focus:outline-none focus:border-purple-500"
+          >
+            <option value="single">单栏</option>
+            <option value="two-column">双栏</option>
+          </select>
+        </div>
+
+        <!-- 类型 -->
+        <div>
+          <label for="type" class="block text-gray-300 text-sm font-medium mb-2">类型</label>
+          <select
+            id="type"
+            name="type"
+            class="w-full px-4 py-2 bg-gray-900/50 border border-purple-500/20 rounded-lg text-white focus:outline-none focus:border-purple-500"
+          >
+            <option value="article">文章</option>
+            <option value="note">笔记</option>
+            <option value="tutorial">教程</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="flex justify-end space-x-4">
+        <button
+          type="button"
+          id="saveDraftBtn"
+          class="px-6 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
+        >
+          保存草稿
+        </button>
+        <button
+          type="submit"
+          class="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
+        >
+          发布文章
+        </button>
+      </div>
+    </form>
+  </div>
+</AdminLayout>
+
+<script>
+  const form = document.getElementById('postForm') as HTMLFormElement;
+  const saveDraftBtn = document.getElementById('saveDraftBtn') as HTMLButtonElement;
+  const coverImageInput = document.getElementById('coverImage') as HTMLInputElement;
+  const coverImageUrl = document.getElementById('coverImageUrl') as HTMLInputElement;
+  const imagePreview = document.getElementById('imagePreview') as HTMLImageElement;
+  const uploadText = document.getElementById('uploadText') as HTMLDivElement;
+  const previewContainer = document.getElementById('previewContainer') as HTMLDivElement;
+  const removeCoverBtn = document.getElementById('removeCoverBtn') as HTMLButtonElement;
+  const dropZone = document.getElementById('dropZone') as HTMLDivElement;
+
+  // 处理拖放
+  dropZone.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    dropZone.classList.add('border-purple-500');
+  });
+
+  dropZone.addEventListener('dragleave', () => {
+    dropZone.classList.remove('border-purple-500');
+  });
+
+  dropZone.addEventListener('drop', async (e) => {
+    e.preventDefault();
+    dropZone.classList.remove('border-purple-500');
+    
+    const file = e.dataTransfer?.files[0];
+    if (file) {
+      await handleFileUpload(file);
+    }
+  });
+
+  // 处理文件选择
+  coverImageInput.addEventListener('change', async () => {
+    const file = coverImageInput.files?.[0];
+    if (file) {
+      await handleFileUpload(file);
+    }
+  });
+
+  // 处理文件上传
+  async function handleFileUpload(file: File) {
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const response = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || '上传失败');
+      }
+
+      const { url } = await response.json();
+      
+      // 显示预览
+      imagePreview.src = url;
+      uploadText.classList.add('hidden');
+      previewContainer.classList.remove('hidden');
+      removeCoverBtn.classList.remove('hidden');
+      
+      // 保存URL
+      coverImageUrl.value = url;
+    } catch (error) {
+      console.error('上传图片错误:', error);
+      alert(error instanceof Error ? error.message : '上传失败，请重试');
+    }
+  }
+
+  // 移除封面图
+  removeCoverBtn.addEventListener('click', () => {
+    imagePreview.src = '';
+    coverImageUrl.value = '';
+    uploadText.classList.remove('hidden');
+    previewContainer.classList.add('hidden');
+    removeCoverBtn.classList.add('hidden');
+    coverImageInput.value = '';
+  });
+
+  // 处理表单提交
+  async function handleSubmit(isPublish: boolean) {
+    try {
+      const formData = new FormData(form);
+      
+      // 准备要发送的数据
+      const data = {
+        title: formData.get('title')?.toString() || '',
+        content: formData.get('content')?.toString() || '',
+        summary: formData.get('summary')?.toString() || '',
+        category: formData.get('category')?.toString() || '',
+        tags: formData.get('tags')?.toString()
+          ? formData.get('tags')?.toString().split(',').map(tag => tag.trim()).filter(Boolean)
+          : [],
+        cover_image: formData.get('coverImageUrl')?.toString() || null,
+        layout: formData.get('layout')?.toString() as 'single' | 'two-column' || 'single',
+        type: formData.get('type')?.toString() as 'article' | 'note' | 'tutorial' || 'article',
+        published: isPublish
+      };
+
+      // 验证必填字段
+      if (!data.title || !data.content || !data.category || !data.summary) {
+        throw new Error(`请填写所有必填字段`);
+      }
+
+      // 获取认证令牌
+      const token = getCookie('token');
+      if (!token) {
+        throw new Error('未登录，请先登录');
+      }
+
+      const response = await fetch('/api/posts', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(data)
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || '保存失败');
+      }
+
+      const result = await response.json();
+      window.location.href = '/admin/posts';
+    } catch (error) {
+      console.error('保存文章错误:', error);
+      alert(error instanceof Error ? error.message : '保存失败，请重试');
+    }
+  }
+
+  // 保存草稿
+  saveDraftBtn.addEventListener('click', async () => {
+    await handleSubmit(false);
+  });
+
+  // 发布文章
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    await handleSubmit(true);
+  });
+
+  // 获取cookie函数
+  function getCookie(name: string) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop()?.split(';').shift();
+    return '';
+  }
+</script> 

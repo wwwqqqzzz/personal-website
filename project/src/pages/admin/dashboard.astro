@@ -1,0 +1,76 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+---
+
+<AdminLayout title="仪表盘">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- 文章统计 -->
+      <div class="bg-gray-900/50 backdrop-blur-sm rounded-xl p-6 border border-purple-500/20">
+        <div class="flex items-center justify-between">
+          <h3 class="text-lg font-medium text-gray-200">文章统计</h3>
+          <i class="fas fa-file-alt text-2xl text-purple-500"></i>
+        </div>
+        <p class="mt-2 text-3xl font-semibold text-white">0</p>
+        <p class="mt-1 text-sm text-gray-400">总文章数</p>
+      </div>
+
+      <!-- 分类统计 -->
+      <div class="bg-gray-900/50 backdrop-blur-sm rounded-xl p-6 border border-purple-500/20">
+        <div class="flex items-center justify-between">
+          <h3 class="text-lg font-medium text-gray-200">分类统计</h3>
+          <i class="fas fa-folder text-2xl text-purple-500"></i>
+        </div>
+        <p class="mt-2 text-3xl font-semibold text-white">0</p>
+        <p class="mt-1 text-sm text-gray-400">总分类数</p>
+      </div>
+
+      <!-- 标签统计 -->
+      <div class="bg-gray-900/50 backdrop-blur-sm rounded-xl p-6 border border-purple-500/20">
+        <div class="flex items-center justify-between">
+          <h3 class="text-lg font-medium text-gray-200">标签统计</h3>
+          <i class="fas fa-tags text-2xl text-purple-500"></i>
+        </div>
+        <p class="mt-2 text-3xl font-semibold text-white">0</p>
+        <p class="mt-1 text-sm text-gray-400">总标签数</p>
+      </div>
+    </div>
+
+    <!-- 最近文章 -->
+    <div class="mt-8">
+      <div class="bg-gray-900/50 backdrop-blur-sm rounded-xl p-6 border border-purple-500/20">
+        <h3 class="text-lg font-medium text-gray-200 mb-4">最近文章</h3>
+        <div class="space-y-4">
+          <div class="text-gray-400 text-center py-8">
+            暂无文章
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 快速操作 -->
+    <div class="mt-8">
+      <div class="bg-gray-900/50 backdrop-blur-sm rounded-xl p-6 border border-purple-500/20">
+        <h3 class="text-lg font-medium text-gray-200 mb-4">快速操作</h3>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <a href="/admin/posts/new" class="flex items-center justify-center gap-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
+            <i class="fas fa-plus"></i>
+            <span>写文章</span>
+          </a>
+          <a href="/admin/categories" class="flex items-center justify-center gap-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
+            <i class="fas fa-folder-plus"></i>
+            <span>添加分类</span>
+          </a>
+          <a href="/admin/tags" class="flex items-center justify-center gap-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
+            <i class="fas fa-tag"></i>
+            <span>管理标签</span>
+          </a>
+          <a href="/admin/profile" class="flex items-center justify-center gap-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
+            <i class="fas fa-user-cog"></i>
+            <span>个人设置</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</AdminLayout> 
