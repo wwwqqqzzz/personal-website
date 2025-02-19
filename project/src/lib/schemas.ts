@@ -12,4 +12,14 @@ export const PostSchema = z.object({
   published: z.boolean().default(false)
 });
 
-export type Post = z.infer<typeof PostSchema>; 
+export const CategorySchema = z.object({
+  name: z.string().min(1, '分类名称不能为空').max(50, '分类名称不能超过50个字符'),
+  slug: z.string().min(1, '分类别名不能为空').max(50, '分类别名不能超过50个字符')
+    .regex(/^[a-z0-9-]+$/, '分类别名只能包含小写字母、数字和连字符'),
+  description: z.string().max(200, '描述不能超过200个字符').optional(),
+  parent_id: z.string().optional(),
+  order: z.number().int().min(0).default(0)
+});
+
+export type Post = z.infer<typeof PostSchema>;
+export type Category = z.infer<typeof CategorySchema>; 

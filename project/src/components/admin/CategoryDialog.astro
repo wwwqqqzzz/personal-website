@@ -1,0 +1,306 @@
+---
+interface Category {
+  id: string;
+  name: string;
+  slug: string;
+  description?: string;
+  parent_id?: string;
+  order: number;
+  children?: Category[];
+}
+
+interface Props {
+  title?: string;
+}
+
+const { title = '添加分类' } = Astro.props;
+
+// 扩展Window接口
+declare global {
+  interface Window {
+    showDialog: (category?: Category) => void;
+    updateParentOptions: (categories: Category[], excludeId?: string) => void;
+  }
+}
+
+// 导出函数供客户端使用
+export const showDialog = `
+  function showDialog(category) {
+    const dialog = document.getElementById('categoryDialog');
+    const titleEl = document.getElementById('dialogTitle');
+    const idInput = document.getElementById('categoryId');
+    const nameInput = document.getElementById('name');
+    const slugInput = document.getElementById('slug');
+    const descInput = document.getElementById('description');
+    const parentSelect = document.getElementById('parent');
+    const orderInput = document.getElementById('order');
+
+    if (category) {
+      titleEl.textContent = '编辑分类';
+      idInput.value = category.id;
+      nameInput.value = category.name;
+      slugInput.value = category.slug;
+      descInput.value = category.description || '';
+      parentSelect.value = category.parent_id || '';
+      orderInput.value = category.order;
+    } else {
+      titleEl.textContent = '添加分类';
+      idInput.value = '';
+      nameInput.value = '';
+      slugInput.value = '';
+      descInput.value = '';
+      parentSelect.value = '';
+      orderInput.value = '0';
+    }
+
+    dialog.showModal();
+  }
+`;
+
+export const updateParentOptions = `
+  function updateParentOptions(categories, excludeId) {
+    const parentSelect = document.getElementById('parent');
+    
+    // 清空现有选项
+    while (parentSelect.options.length > 1) {
+      parentSelect.remove(1);
+    }
+
+    // 添加分类选项
+    const addOption = (category, level = 0) => {
+      if (category.id === excludeId) return;
+      
+      const option = document.createElement('option');
+      option.value = category.id;
+      option.textContent = '  '.repeat(level) + category.name;
+      parentSelect.appendChild(option);
+
+      if (category.children) {
+        category.children.forEach(child => addOption(child, level + 1));
+      }
+    };
+
+    categories.forEach(category => addOption(category));
+  }
+`;
+---
+
+<dialog id="categoryDialog" class="bg-gray-900 text-white p-0 rounded-xl backdrop:bg-black/50">
+  <div class="w-[500px] max-w-full">
+    <div class="flex items-center justify-between p-6 border-b border-gray-700">
+      <h3 id="dialogTitle" class="text-xl font-semibold">{title}</h3>
+      <button id="closeDialog" class="text-gray-400 hover:text-white">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <form id="categoryForm" class="p-6 space-y-4">
+      <input type="hidden" id="categoryId" name="id" />
+      
+      <div>
+        <label for="name" class="block text-sm font-medium text-gray-300 mb-1">名称</label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          required
+          class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+          placeholder="分类名称"
+        />
+      </div>
+
+      <div>
+        <label for="slug" class="block text-sm font-medium text-gray-300 mb-1">别名</label>
+        <input
+          type="text"
+          id="slug"
+          name="slug"
+          required
+          class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+          placeholder="英文别名，用于 URL"
+        />
+      </div>
+
+      <div>
+        <label for="description" class="block text-sm font-medium text-gray-300 mb-1">描述</label>
+        <textarea
+          id="description"
+          name="description"
+          rows="3"
+          class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+          placeholder="分类描述（可选）"
+        ></textarea>
+      </div>
+
+      <div>
+        <label for="parent" class="block text-sm font-medium text-gray-300 mb-1">父分类</label>
+        <select
+          id="parent"
+          name="parent_id"
+          class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+        >
+          <option value="">无</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="order" class="block text-sm font-medium text-gray-300 mb-1">排序</label>
+        <input
+          type="number"
+          id="order"
+          name="order"
+          required
+          min="0"
+          value="0"
+          class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+        />
+      </div>
+
+      <div class="flex justify-end gap-4 mt-6">
+        <button
+          type="button"
+          id="cancelDialog"
+          class="px-4 py-2 text-gray-300 hover:text-white"
+        >
+          取消
+        </button>
+        <button
+          type="submit"
+          class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
+        >
+          保存
+        </button>
+      </div>
+    </form>
+  </div>
+</dialog>
+
+<script>
+  const dialog = document.getElementById('categoryDialog') as HTMLDialogElement;
+  const form = document.getElementById('categoryForm') as HTMLFormElement;
+  const closeBtn = document.getElementById('closeDialog');
+  const cancelBtn = document.getElementById('cancelDialog');
+  const titleEl = document.getElementById('dialogTitle');
+  const idInput = document.getElementById('categoryId') as HTMLInputElement;
+  const nameInput = document.getElementById('name') as HTMLInputElement;
+  const slugInput = document.getElementById('slug') as HTMLInputElement;
+  const descInput = document.getElementById('description') as HTMLTextAreaElement;
+  const parentSelect = document.getElementById('parent') as HTMLSelectElement;
+  const orderInput = document.getElementById('order') as HTMLInputElement;
+
+  // 导出到全局作用域
+  window.showDialog = function(category) {
+    if (category) {
+      titleEl.textContent = '编辑分类';
+      idInput.value = category.id;
+      nameInput.value = category.name;
+      slugInput.value = category.slug;
+      descInput.value = category.description || '';
+      parentSelect.value = category.parent_id || '';
+      orderInput.value = category.order;
+    } else {
+      titleEl.textContent = '添加分类';
+      form.reset();
+      idInput.value = '';
+    }
+
+    dialog.showModal();
+  };
+
+  window.updateParentOptions = function(categories, excludeId) {
+    // 清空现有选项
+    while (parentSelect.options.length > 1) {
+      parentSelect.remove(1);
+    }
+
+    // 添加分类选项
+    const addOption = (category, level = 0) => {
+      if (category.id === excludeId) return;
+      
+      const option = document.createElement('option');
+      option.value = category.id;
+      option.textContent = '  '.repeat(level) + category.name;
+      parentSelect.appendChild(option);
+
+      if (category.children) {
+        category.children.forEach(child => addOption(child, level + 1));
+      }
+    };
+
+    categories.forEach(category => addOption(category));
+  };
+
+  // 自动生成别名
+  nameInput?.addEventListener('input', () => {
+    if (!slugInput.value) {
+      slugInput.value = nameInput.value
+        .toLowerCase()
+        .trim()
+        .replace(/[^\w\s-]/g, '')
+        .replace(/[\s_-]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+    }
+  });
+
+  closeBtn?.addEventListener('click', () => {
+    dialog.close();
+  });
+
+  cancelBtn?.addEventListener('click', () => {
+    dialog.close();
+  });
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    try {
+      const formData = new FormData(form);
+      const data = {
+        name: formData.get('name')?.toString() || '',
+        slug: formData.get('slug')?.toString() || '',
+        description: formData.get('description')?.toString() || '',
+        parent_id: formData.get('parent_id')?.toString() || undefined,
+        order: parseInt(formData.get('order')?.toString() || '0')
+      };
+
+      // 获取认证令牌
+      const token = getCookie('token');
+      if (!token) {
+        throw new Error('未登录，请先登录');
+      }
+
+      const response = await fetch('/api/categories', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(data)
+      });
+
+      const result = await response.json();
+      
+      if (!response.ok) {
+        if (result.code === 'VALIDATION_ERROR') {
+          const errorMessages = result.errors.map(err => 
+            `${err.field}: ${err.message}`
+          ).join('\n');
+          throw new Error(`验证失败:\n${errorMessages}`);
+        }
+        throw new Error(result.message || '保存失败');
+      }
+
+      dialog.close();
+      window.location.reload();
+    } catch (error) {
+      console.error('保存分类失败:', error);
+      alert(error instanceof Error ? error.message : '保存失败');
+    }
+  });
+
+  function getCookie(name: string): string | undefined {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop()?.split(';').shift();
+  }
+</script> 

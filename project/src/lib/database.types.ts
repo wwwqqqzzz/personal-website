@@ -35,6 +35,35 @@ export interface Database {
           avatar_url?: string | null
         }
       }
+      categories: {
+        Row: {
+          id: string
+          created_at: string
+          name: string
+          slug: string
+          description: string | null
+          parent_id: string | null
+          order: number
+        }
+        Insert: {
+          id?: string
+          created_at?: string
+          name: string
+          slug: string
+          description?: string | null
+          parent_id?: string | null
+          order?: number
+        }
+        Update: {
+          id?: string
+          created_at?: string
+          name?: string
+          slug?: string
+          description?: string | null
+          parent_id?: string | null
+          order?: number
+        }
+      }
       posts: {
         Row: {
           id: string

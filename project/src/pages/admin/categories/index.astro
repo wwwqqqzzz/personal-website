@@ -1,0 +1,177 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+import CategoryDialog from '../../../components/admin/CategoryDialog.astro';
+
+interface Category {
+  id: string;
+  name: string;
+  slug: string;
+  description?: string;
+  parent_id?: string;
+  order: number;
+  children?: Category[];
+}
+---
+
+<AdminLayout title="分类管理">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- 页面标题 -->
+    <div class="flex justify-between items-center mb-8">
+      <h1 class="text-2xl font-semibold text-white">分类管理</h1>
+      <button 
+        id="addCategoryBtn"
+        class="flex items-center gap-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
+      >
+        <i class="fas fa-plus"></i>
+        <span>添加分类</span>
+      </button>
+    </div>
+
+    <!-- 分类树形列表 -->
+    <div class="bg-gray-900/50 backdrop-blur-sm rounded-xl p-6 border border-purple-500/20">
+      <div id="categoryTree" class="min-h-[200px]">
+        <div class="text-gray-400 text-center py-8">
+          加载中...
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <CategoryDialog />
+</AdminLayout>
+
+<script>
+  let categories: Category[] = [];
+
+  // 获取分类树
+  async function fetchCategoryTree(): Promise<Category[]> {
+    try {
+      const response = await fetch('/api/categories/tree');
+      if (!response.ok) throw new Error('获取分类失败');
+      return await response.json();
+    } catch (error) {
+      console.error('获取分类失败:', error);
+      return [];
+    }
+  }
+
+  // 渲染分类树
+  function renderCategoryTree(tree: Category[], level = 0): string {
+    return tree.map(category => {
+      const padding = level * 2;
+      const hasChildren = category.children && category.children.length > 0;
+      
+      return `
+        <div class="category-item" style="padding-left: ${padding}rem">
+          <div class="flex items-center gap-4 py-2 hover:bg-gray-800/50 rounded px-4 group">
+            <div class="flex-1 flex items-center gap-2">
+              ${hasChildren 
+                ? `<i class="fas fa-folder text-yellow-500"></i>` 
+                : `<i class="fas fa-file text-blue-500"></i>`
+              }
+              <span class="text-gray-200">${category.name}</span>
+              <span class="text-gray-500 text-sm">(${category.slug})</span>
+            </div>
+            <div class="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+              <button 
+                class="edit-btn p-2 text-gray-400 hover:text-white"
+                data-id="${category.id}"
+              >
+                <i class="fas fa-edit"></i>
+              </button>
+              <button 
+                class="delete-btn p-2 text-gray-400 hover:text-red-500"
+                data-id="${category.id}"
+              >
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          </div>
+          ${hasChildren ? `
+            <div class="children">
+              ${renderCategoryTree(category.children, level + 1)}
+            </div>
+          ` : ''}
+        </div>
+      `;
+    }).join('');
+  }
+
+  // 获取分类详情
+  async function fetchCategory(id: string): Promise<Category | null> {
+    try {
+      const response = await fetch(`/api/categories/${id}`);
+      if (!response.ok) throw new Error('获取分类详情失败');
+      return await response.json();
+    } catch (error) {
+      console.error('获取分类详情失败:', error);
+      return null;
+    }
+  }
+
+  // 初始化
+  async function init() {
+    const categoryTree = document.getElementById('categoryTree');
+    if (!categoryTree) return;
+
+    const tree = await fetchCategoryTree();
+    categories = tree;
+    categoryTree.innerHTML = renderCategoryTree(tree);
+
+    // 添加事件监听
+    const addBtn = document.getElementById('addCategoryBtn');
+    addBtn?.addEventListener('click', () => {
+      // @ts-ignore
+      window.updateParentOptions(categories);
+      // @ts-ignore
+      window.showDialog();
+    });
+
+    document.querySelectorAll('.edit-btn').forEach(btn => {
+      btn.addEventListener('click', async (e) => {
+        const target = e.currentTarget as HTMLButtonElement;
+        const id = target.dataset.id;
+        if (!id) return;
+
+        const category = await fetchCategory(id);
+        if (category) {
+          // @ts-ignore
+          window.updateParentOptions(categories, category.id);
+          // @ts-ignore
+          window.showDialog(category);
+        }
+      });
+    });
+
+    document.querySelectorAll('.delete-btn').forEach(btn => {
+      btn.addEventListener('click', async (e) => {
+        const target = e.currentTarget as HTMLButtonElement;
+        const id = target.dataset.id;
+        if (!id) return;
+
+        if (!confirm('确定要删除这个分类吗？')) return;
+
+        try {
+          const token = document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1];
+          const response = await fetch(`/api/categories/${id}`, {
+            method: 'DELETE',
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+          });
+
+          if (!response.ok) throw new Error('删除分类失败');
+          
+          // 重新加载分类树
+          init();
+        } catch (error) {
+          console.error('删除分类失败:', error);
+          alert('删除分类失败');
+        }
+      });
+    });
+  }
+
+  // 页面加载完成后初始化
+  document.addEventListener('DOMContentLoaded', init);
+</script> 
